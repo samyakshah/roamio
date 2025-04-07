@@ -5,6 +5,7 @@ import AppNavigator from './AppNavigator';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { auth } from '../firebase/firebaseConfig';
 import HomeScreen from '../screens/HomeScreen';
+import LoginScreen from '../screens/LoginScreen';
 
 const RootNavigator = () => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
@@ -24,7 +25,7 @@ const RootNavigator = () => {
 
   return (
     <NavigationContainer>
-      {isAuthenticated ? <HomeScreen /> : <AppNavigator />}
+      <AppNavigator isAuthenticated={isAuthenticated} />
     </NavigationContainer>
   );
 };

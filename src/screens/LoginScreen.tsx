@@ -12,7 +12,7 @@ const LoginScreen = ({ navigation }: any) => {
     try {
       await signInWithEmailAndPassword(auth, email, password);
       // Navigate to Home screen if login is successful
-      navigation.replace('Home');
+      navigation.navigate('Home');
     } catch (error: any) {
       Alert.alert('Error', error.message);
     }

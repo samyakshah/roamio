@@ -1,21 +1,20 @@
+// src/navigation/AppNavigator.tsx
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-
 import LoginScreen from '../screens/LoginScreen';
 import SignupScreen from '../screens/SignupScreen';
 import HomeScreen from '../screens/HomeScreen';
 import NotificationsScreen from '../screens/NotificationsScreen';
 import PostScreen from '../screens/PostScreen';
+import LogoutScreen from '../screens/LogoutScreen';
 
-// Create navigators
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 const Drawer = createDrawerNavigator();
 
-// Bottom Tab Navigator
 const BottomTabNavigator = () => {
   return (
     <Tab.Navigator
@@ -25,7 +24,6 @@ const BottomTabNavigator = () => {
           if (route.name === 'Home') iconName = 'home';
           else if (route.name === 'Notifications') iconName = 'notifications';
           else if (route.name === 'Post') iconName = 'add-circle-outline';
-
           return <Icon name={iconName || 'help-outline'} size={size} color={color} />;
         },
         tabBarActiveTintColor: '#007BFF',
@@ -40,7 +38,6 @@ const BottomTabNavigator = () => {
   );
 };
 
-// Drawer Navigator
 const DrawerNavigator = () => {
   return (
     <Drawer.Navigator
@@ -50,34 +47,20 @@ const DrawerNavigator = () => {
       }}
     >
       <Drawer.Screen name="MainTabs" component={BottomTabNavigator} options={{ title: 'Home' }} />
-      <Drawer.Screen
-        name="Logout"
-        component={LoginScreen}
-        options={{ title: 'Log Out' }}
-      />
+      <Drawer.Screen name="Logout" component={LogoutScreen} options={{ title: 'Log Out' }} />
     </Drawer.Navigator>
   );
 };
 
-// App Navigator
-const AppNavigator = () => {
+const AppNavigator = ({ isAuthenticated }: { isAuthenticated: boolean }) => {
   return (
-    <Stack.Navigator initialRouteName="Login">
-      <Stack.Screen
-        name="Login"
-        component={LoginScreen}
-        options={{ title: 'Log In', headerShown: false }}
-      />
-      <Stack.Screen
-        name="Signup"
-        component={SignupScreen}
-        options={{ title: 'Sign Up', headerShown: false }}
-      />
-      <Stack.Screen
-        name="Home"
-        component={DrawerNavigator}
-        options={{ headerShown: false }}
-      />
+    <Stack.Navigator
+      initialRouteName={isAuthenticated ? 'Home' : 'Login'}
+      screenOptions={{ headerShown: false }}
+    >
+      <Stack.Screen name="Login" component={LoginScreen} />
+      <Stack.Screen name="Signup" component={SignupScreen} />
+      <Stack.Screen name="Home" component={DrawerNavigator} />
     </Stack.Navigator>
   );
 };

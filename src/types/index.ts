@@ -6,4 +6,8 @@ export type RootStackParamList = {
     Signup: undefined;
     Home: undefined;
   };
-  
+export type DrawerParamList = {
+    MainTabs: undefined;
+    Profile: undefined;
+    Logout: undefined;
+  };
